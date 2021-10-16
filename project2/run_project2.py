@@ -35,7 +35,7 @@ class ProjectRunner:
             To be implemented."""
         raise NotImplementedError
 
-    def _daat_and(self):
+    def _daat_and(self, type):
         """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
             Use appropriate parameters & return types.
             To be implemented."""
@@ -123,10 +123,13 @@ class ProjectRunner:
                 output_dict['postingsList'][term] = postings
                 output_dict['postingsListSkip'][term] = skip_postings
 
-
-            and_op_no_skip, and_op_skip, and_op_no_skip_sorted, and_op_skip_sorted = None, None, None, None
-            and_comparisons_no_skip, and_comparisons_skip, \
-                and_comparisons_no_skip_sorted, and_comparisons_skip_sorted = None, None, None, None
+            and_op_no_skip, and_comparisons_no_skip = self._daat_and(input_term_arr, 'no_skip')
+            and_op_no_skip_sorted, and_comparisons_no_skip_sorted = self._daat_and(input_term_arr)
+            and_op_skip, and_comparisons_skip = self._daat_and(input_term_arr)
+            and_op_skip_sorted, and_comparisons_skip_sorted =  self._daat_and(input_term_arr)
+            # and_op_no_skip, and_op_skip, and_op_no_skip_sorted, and_op_skip_sorted = None, None, None, None
+            # and_comparisons_no_skip, and_comparisons_skip, \
+            #     and_comparisons_no_skip_sorted, and_comparisons_skip_sorted = None, None, None, None
             """ Implement logic to populate initialize the above variables.
                 The below code formats your result to the required format.
                 To be implemented."""

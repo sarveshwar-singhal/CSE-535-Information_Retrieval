@@ -8,16 +8,17 @@ import math
 
 class Node:
 
-    def __init__(self, value=None, next=None, freq = 0, skip = None, tf =0):
+    def __init__(self, value=None, next=None, freq = 0, skip = None, tf =0, tf_idf = 0):
         """ Class to define the structure of each node in a linked list (postings list).
             Value: document id, Next: Pointer to the next node
             Add more parameters if needed.
             Hint: You may want to define skip pointers & appropriate score calculation here"""
-        self.value = value  #docId
-        self.next = next    #next node address
-        self.freq = freq    #no of times that doc appeared
-        self.skip = skip    #skip postings
-        self.tf = tf        #tf score of each node
+        self.value = value      #docId
+        self.next = next        #next node address
+        self.freq = freq        #no of times that doc appeared
+        self.skip = skip        #skip postings
+        self.tf = tf            #tf score of each node
+        self.tf_idf = tf_idf    #tf-idf scores
 
 
 class LinkedList:
@@ -114,7 +115,6 @@ class LinkedList:
             Insert the element at an appropriate position, such that elements to the left are lower than the inserted
             element, and elements to the right are greater than the inserted element.
             To be implemented. """
-        # raise NotImplementedError
 
     def find_an_element(self, value):
         a = self.start_node

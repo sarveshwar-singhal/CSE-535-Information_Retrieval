@@ -2,6 +2,7 @@
 @author: Sougata Saha
 Institute: University at Buffalo
 '''
+from builtins import set
 
 from tqdm import tqdm
 from preprocessor import Preprocessor
@@ -62,16 +63,23 @@ class ProjectRunner:
         """ This function reads & indexes the corpus. After creating the inverted index,
             it sorts the index by the terms, add skip pointers, and calculates the tf-idf scores.
             Already implemented, but you can modify the orchestration, as you seem fit."""
+        count_of_doc = 0
+        # token_count = 0
         with open(corpus, 'r') as fp:
             for line in tqdm(fp.readlines()):
                 doc_id, document = self.preprocessor.get_doc_id(line)
-                # print(type(doc_id), type(document))
                 tokenized_document = self.preprocessor.tokenizer(document)
-                # exit(10)
+                # self.indexer.token_count = tokenized_document.__len__()
                 self.indexer.generate_inverted_index(doc_id, tokenized_document)
+                count_of_doc += 1
         self.indexer.sort_terms()
         self.indexer.add_skip_connections()
-        self.indexer.calculate_tf_idf()
+        self.indexer.calculate_tf_idf(count_of_doc)
+        with open('data/temp_output.txt','w') as fp:
+            for i in self.indexer.get_index().keys():
+                text = i + str(self.indexer.get_index()[i].traverse_list())
+                fp.write(text)
+        exit(10)
 
     def sanity_checker(self, command):
         """ DO NOT MODIFY THIS. THIS IS USED BY THE GRADER. """

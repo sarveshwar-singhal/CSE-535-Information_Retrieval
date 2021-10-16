@@ -8,7 +8,7 @@ import math
 
 class Node:
 
-    def __init__(self, value=None, next=None, freq = 0, skip = None):
+    def __init__(self, value=None, next=None, freq = 0, skip = None, tf =0):
         """ Class to define the structure of each node in a linked list (postings list).
             Value: document id, Next: Pointer to the next node
             Add more parameters if needed.
@@ -17,6 +17,7 @@ class Node:
         self.next = next    #next node address
         self.freq = freq    #no of times that doc appeared
         self.skip = skip    #skip postings
+        self.tf = tf        #tf score of each node
 
 
 class LinkedList:

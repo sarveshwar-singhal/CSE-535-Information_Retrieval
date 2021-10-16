@@ -8,9 +8,10 @@ from collections import OrderedDict
 
 
 class Indexer:
-    def __init__(self):
+    def __init__(self, token_count = 0):
         """ Add more attributes if needed"""
         self.inverted_index = OrderedDict({})
+        self.token_count = token_count
 
     def get_index(self):
         """ Function to get the index.
@@ -56,9 +57,11 @@ class Indexer:
             ll.add_skip_connections()
         """ For each postings list in the index, add skip pointers.
             To be implemented."""
-        # raise NotImplementedError
 
-    def calculate_tf_idf(self):
+    def calculate_tf_idf(self, doc_count):
+        for key in self.inverted_index.keys():
+            val = self.inverted_index[key]
+            val.idf = doc_count/val.length
+            print(self.inverted_index[key].idf)
         """ Calculate tf-idf score for each document in the postings lists of the index.
             To be implemented."""
-        raise NotImplementedError

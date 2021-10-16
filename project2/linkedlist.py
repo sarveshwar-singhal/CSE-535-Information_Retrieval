@@ -13,10 +13,10 @@ class Node:
             Value: document id, Next: Pointer to the next node
             Add more parameters if needed.
             Hint: You may want to define skip pointers & appropriate score calculation here"""
-        self.value = value
-        self.next = next
-        self.freq = freq
-        self.skip = skip
+        self.value = value  #docId
+        self.next = next    #next node address
+        self.freq = freq    #no of times that doc appeared
+        self.skip = skip    #skip postings
 
 
 class LinkedList:
@@ -26,7 +26,7 @@ class LinkedList:
     def __init__(self):
         self.start_node = None
         self.end_node = None
-        self.length, self.n_skips, self.idf = 0, 0, 0.0
+        self.length, self.n_skips, self.idf = 0, 0, 0.0 #length: len of linked list, n_skips: skip count
         self.skip_length = None
 
     def traverse_list(self):
@@ -87,19 +87,16 @@ class LinkedList:
         if self.start_node is None:
             self.start_node = new_node
             self.end_node = new_node
-            # self.length += 1
             return
 
         elif self.start_node.value >= value:
             self.start_node = new_node
             self.start_node.next = n
-            # self.length += 1
             return
 
         elif self.end_node.value <= value:
             self.end_node.next = new_node
             self.end_node = new_node
-            # self.length += 1
             return
 
         else:
@@ -111,13 +108,12 @@ class LinkedList:
                 m = m.next
             m.next = new_node
             new_node.next = n
-            # self.length += 1
             return
         """ Write logic to add new elements to the linked list.
             Insert the element at an appropriate position, such that elements to the left are lower than the inserted
             element, and elements to the right are greater than the inserted element.
             To be implemented. """
-        raise NotImplementedError
+        # raise NotImplementedError
 
     def find_an_element(self, value):
         a = self.start_node

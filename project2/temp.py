@@ -1,6 +1,8 @@
 
 import re
 import time
+from collections import OrderedDict
+from nltk.corpus import stopwords
 
 def rough():
     ll = LinkedList()
@@ -10,6 +12,21 @@ def rough():
     # print(ll.traverse_skips())
     a = ll.find_an_element(5)
     print(a.value)
+    exit(10)
+    #checking indexer functioning with temp values
+    self.indexer.generate_inverted_index(100,[3,1,2])
+    self.indexer.generate_inverted_index(101,[5,4,3,1,2])
+    print(self.indexer.get_index())
+    for key in self.indexer.get_index().keys():
+        print(self.indexer.get_index()[key].traverse_list())
+    exit(10)
+
+
+def output_txt():
+    with open('data/temp_output.txt','w') as fp:
+        for i in self.indexer.get_index().keys():
+            text = i + str(self.indexer.get_index()[i].traverse_list())
+            fp.write(text)
     exit(10)
 
 class Human:
@@ -26,8 +43,7 @@ class Human:
     def speaks(self):
         print(self.name,"says, how are you !!")
 
-
-def main():
+def regex():
     c = '种this is temp-2!@#$%^&*() THIS IS UPPER CASE PART-2 another this is upper part-3'
     c = '    def    '
     s1 = set(['this','this','this','this','this'])
@@ -37,7 +53,7 @@ def main():
     z = []
     for term in x:
         if len(term) >0:
-          z.append(term)
+            z.append(term)
     y = " ".join(x)
     # if match:  print(match.group())
     # else:  print("Not found")
@@ -52,6 +68,13 @@ def main():
     # tom = Human("Tom Cruise", "actor")
     # tom.do_work()
     # tom.speaks()
+
+def main():
+    s1 = set(stopwords.words('english'))
+    print('what' in s1)
+    # od1 = OrderedDict()
+    # od1['a'] = "alpha"
+    # print(od1.__str__())
 
 
 if __name__ == '__main__':

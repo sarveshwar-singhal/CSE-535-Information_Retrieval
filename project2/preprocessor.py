@@ -37,8 +37,9 @@ class Preprocessor:
         # print(text)
         # text = 'acb'
         text = text.encode("ascii", "replace")
-        # print(text)
+        # print("text after encoding:",text)
         text = text.decode()
+        # print("text after decoding:",text)
         text = text.lower()
         if text[-1] == '\n':
             text=text[:-1]
@@ -48,7 +49,7 @@ class Preprocessor:
         text = " ".join(text)
 
         #other char removal
-        text_li = re.findall('[A-Z|a-z|0-9]*',text)
+        text_li = re.findall('[A-Za-z0-9]*',text)
         pre_stem_text = []
         for term in text_li:
             if len(term) > 0:
@@ -59,7 +60,6 @@ class Preprocessor:
         for i in range(len(pre_stem_text)):
             stem_text.append(ps.stem(pre_stem_text[i]))
         # print(text)
-        # text = text.lower()
+        # print(stem_text==out)
         # print(stem_text,end="") #remove
-        # raise NotImplementedError
         return stem_text

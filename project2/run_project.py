@@ -40,11 +40,14 @@ class ProjectRunner:
             To be implemented."""
         raise NotImplementedError
 
-    def _get_postings(self):
+    def _get_postings(self, term):
         """ Function to get the postings list of a term from the index.
             Use appropriate parameters & return types.
             To be implemented."""
-        raise NotImplementedError
+        postings = []
+        if self.indexer.get_index().get(term):
+            postings = self.indexer.get_index()[term].traverse_list()
+        return postings
 
     def _output_formatter(self, op):
         """ This formats the result in the required format.
@@ -64,7 +67,7 @@ class ProjectRunner:
                 doc_id, document = self.preprocessor.get_doc_id(line)
                 # print(type(doc_id), type(document))
                 tokenized_document = self.preprocessor.tokenizer(document)
-                exit(10)
+                # exit(10)
                 self.indexer.generate_inverted_index(doc_id, tokenized_document)
         self.indexer.sort_terms()
         self.indexer.add_skip_connections()
@@ -101,19 +104,20 @@ class ProjectRunner:
                 3. Get the DAAT AND query results & number of comparisons with & without skip pointers.
                 4. Get the DAAT AND query results & number of comparisons with & without skip pointers, 
                     along with sorting by tf-idf scores."""
-            raise NotImplementedError
-
             input_term_arr = []  # Tokenized query. To be implemented.
+            input_term_arr = self.preprocessor.tokenizer(query)
 
             for term in input_term_arr:
-                postings, skip_postings = None, None
-
+                postings, skip_postings = [], []
+                if self.indexer.get_index().get(term):
+                    postings = self.indexer.get_index()[term].traverse_list()
+                    skip_postings = self.indexer.get_index()[term].traverse_skips()
                 """ Implement logic to populate initialize the above variables.
                     The below code formats your result to the required format.
                     To be implemented."""
-
                 output_dict['postingsList'][term] = postings
                 output_dict['postingsListSkip'][term] = skip_postings
+
 
             and_op_no_skip, and_op_skip, and_op_no_skip_sorted, and_op_skip_sorted = None, None, None, None
             and_comparisons_no_skip, and_comparisons_skip, \

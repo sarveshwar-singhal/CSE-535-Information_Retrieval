@@ -62,7 +62,9 @@ class ProjectRunner:
         with open(corpus, 'r') as fp:
             for line in tqdm(fp.readlines()):
                 doc_id, document = self.preprocessor.get_doc_id(line)
+                # print(type(doc_id), type(document))
                 tokenized_document = self.preprocessor.tokenizer(document)
+                exit(10)
                 self.indexer.generate_inverted_index(doc_id, tokenized_document)
         self.indexer.sort_terms()
         self.indexer.add_skip_connections()
@@ -176,13 +178,18 @@ if __name__ == "__main__":
         Do NOT change it."""
 
     output_location = "project2_output.json"
+    user_name = 'sarveshw' #remove
+    cor_path = r'data/input_corpus.txt' #remove
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--corpus", type=str, help="Corpus File name, with path.")
+    '''parser.add_argument("--corpus", type=str, help="Corpus File name, with path.")'''
+    parser.add_argument("--corpus", type=str, help="Corpus File name, with path.", default=cor_path) #remove
     parser.add_argument("--output_location", type=str, help="Output file name.", default=output_location)
+    '''parser.add_argument("--username", type=str,
+                        help="Your UB username. It's the part of your UB email id before the @buffalo.edu. "
+                             "DO NOT pass incorrect value here")'''
     parser.add_argument("--username", type=str,
                         help="Your UB username. It's the part of your UB email id before the @buffalo.edu. "
-                             "DO NOT pass incorrect value here")
-
+                             "DO NOT pass incorrect value here", default=user_name) #remove
     argv = parser.parse_args()
 
     corpus = argv.corpus

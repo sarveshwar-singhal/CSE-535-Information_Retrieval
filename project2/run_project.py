@@ -75,11 +75,6 @@ class ProjectRunner:
         self.indexer.sort_terms()
         self.indexer.add_skip_connections()
         self.indexer.calculate_tf_idf(count_of_doc)
-        with open('data/temp_output.txt','w') as fp:
-            for i in self.indexer.get_index().keys():
-                text = i + str(self.indexer.get_index()[i].traverse_list())
-                fp.write(text)
-        exit(10)
 
     def sanity_checker(self, command):
         """ DO NOT MODIFY THIS. THIS IS USED BY THE GRADER. """
@@ -190,18 +185,12 @@ if __name__ == "__main__":
         Do NOT change it."""
 
     output_location = "project2_output.json"
-    user_name = 'sarveshw' #remove
-    cor_path = r'data/input_corpus.txt' #remove
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    '''parser.add_argument("--corpus", type=str, help="Corpus File name, with path.")'''
-    parser.add_argument("--corpus", type=str, help="Corpus File name, with path.", default=cor_path) #remove
+    parser.add_argument("--corpus", type=str, help="Corpus File name, with path.")
     parser.add_argument("--output_location", type=str, help="Output file name.", default=output_location)
-    '''parser.add_argument("--username", type=str,
-                        help="Your UB username. It's the part of your UB email id before the @buffalo.edu. "
-                             "DO NOT pass incorrect value here")'''
     parser.add_argument("--username", type=str,
                         help="Your UB username. It's the part of your UB email id before the @buffalo.edu. "
-                             "DO NOT pass incorrect value here", default=user_name) #remove
+                             "DO NOT pass incorrect value here")
     argv = parser.parse_args()
 
     corpus = argv.corpus

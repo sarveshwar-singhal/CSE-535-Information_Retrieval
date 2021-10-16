@@ -64,20 +64,20 @@ class LinkedList:
         if n_skips * n_skips == self.length:
             n_skips = n_skips - 1
         self.n_skips = n_skips
+        self.skip_length = round(math.sqrt(self.length),0)
         a = self.start_node
         prev_node = self.start_node
         temp_count = 0
         for _ in range(self.length):
             a = a.next
             temp_count += 1
-            if temp_count == n_skips:
+            if temp_count == self.skip_length:
                 prev_node.skip = a
                 prev_node = a
                 temp_count = 0
         """ Write logic to add skip pointers to the linked list. 
             This function does not return anything.
             To be implemented."""
-        # raise NotImplementedError
 
     def insert_at_end(self, value):
         # print("insert value ",value)

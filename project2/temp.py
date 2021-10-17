@@ -69,9 +69,16 @@ def regex():
     # tom.do_work()
     # tom.speaks()
 
+def key(term):
+    return term[1]
+
 def main():
-    s1 = set(stopwords.words('english'))
-    print('what' in s1)
+    ll_len = [['a',10],['b',5],['c',1]]
+    ll_len.sort(key=key)
+    print(ll_len)
+    # print(ll_len.sort())
+    # s1 = set(stopwords.words('english'))
+    # print('what' in s1)
     # od1 = OrderedDict()
     # od1['a'] = "alpha"
     # print(od1.__str__())

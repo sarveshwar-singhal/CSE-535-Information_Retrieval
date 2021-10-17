@@ -123,3 +123,10 @@ class LinkedList:
                 return a
             a = a.next
         return False
+
+    def traverse_with_tf_idf(self):
+        a = self.start_node
+        traverse_with_tfidf = []
+        while a is not None:
+            traverse_with_tfidf.append([a.value,a.tf_idf])
+        return traverse_with_tfidf

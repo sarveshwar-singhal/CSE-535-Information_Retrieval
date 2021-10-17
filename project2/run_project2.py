@@ -28,6 +28,9 @@ class ProjectRunner:
         self.preprocessor = Preprocessor()
         self.indexer = Indexer()
 
+    def sort_type(self, li):
+        return li[1]
+
     def _merge(self):
         """ Implement the merge algorithm to merge 2 postings list at a time.
             Use appropriate parameters & return types.
@@ -35,11 +38,21 @@ class ProjectRunner:
             To be implemented."""
         raise NotImplementedError
 
-    def _daat_and(self, type):
+    def _daat_and(self, term_arr, type):
         """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
             Use appropriate parameters & return types.
             To be implemented."""
-        raise NotImplementedError
+        posting_dict = OrderedDict({})
+        ll_len_list = []
+        for term in term_arr:
+            if self.indexer.inverted_index.get(term):
+                posting_dict[term] = self.indexer.inverted_index[term]
+                ll_len_list.append([term, posting_dict[term].length])
+        print("before sorting",ll_len_list)
+        ll_len_list.sort(key=self.sort_type())
+        print("after sorting",ll_len_list)
+
+        # raise NotImplementedError
 
     def _get_postings(self, term):
         """ Function to get the postings list of a term from the index.
@@ -77,6 +90,10 @@ class ProjectRunner:
         #     for i in self.indexer.get_index().keys():
         #         text = i + str(self.indexer.get_index()[i].traverse_list())
         #         fp.write(text)
+        query_list = ['the novel coronavirus','from an epidemic to a pandemic',
+                      'is hydroxychloroquine effective?']
+        random_command = "self.indexer.get_index()['random'].traverse_list()"
+        self.run_queries(query_list, random_command)
 
     def sanity_checker(self, command):
         """ DO NOT MODIFY THIS. THIS IS USED BY THE GRADER. """
@@ -123,10 +140,10 @@ class ProjectRunner:
                 output_dict['postingsList'][term] = postings
                 output_dict['postingsListSkip'][term] = skip_postings
 
-            and_op_no_skip, and_comparisons_no_skip = self._daat_and(input_term_arr, 'no_skip')
+            and_op_no_skip, and_comparisons_no_skip =  self._daat_and(input_term_arr, 'no_skip')
             and_op_no_skip_sorted, and_comparisons_no_skip_sorted = self._daat_and(input_term_arr)
             and_op_skip, and_comparisons_skip = self._daat_and(input_term_arr)
-            and_op_skip_sorted, and_comparisons_skip_sorted =  self._daat_and(input_term_arr)
+            and_op_skip_sorted, and_comparisons_skip_sorted = self._daat_and(input_term_arr)
             # and_op_no_skip, and_op_skip, and_op_no_skip_sorted, and_op_skip_sorted = None, None, None, None
             # and_comparisons_no_skip, and_comparisons_skip, \
             #     and_comparisons_no_skip_sorted, and_comparisons_skip_sorted = None, None, None, None

@@ -5,6 +5,7 @@ Institute: University at Buffalo
 
 from linkedlist import LinkedList
 from collections import OrderedDict
+from tqdm import tqdm   #remove
 
 
 class Indexer:
@@ -59,7 +60,7 @@ class Indexer:
             To be implemented."""
 
     def calculate_tf_idf(self):
-        for key in self.inverted_index.keys():
+        for key in tqdm(self.inverted_index.keys()):
             val = self.inverted_index[key]
             element = val.start_node
             while element is not None:
@@ -73,3 +74,9 @@ class Indexer:
             # print(self.inverted_index[key].idf)
         """ Calculate tf-idf score for each document in the postings lists of the index.
             To be implemented."""
+
+    def traverse_with_tf_idf(self, key):
+        if self.inverted_index.get(key):
+            return self.inverted_index[key].traverse_with_tf_idf()
+        else:
+            return []

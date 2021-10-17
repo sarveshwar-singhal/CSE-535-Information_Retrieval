@@ -60,6 +60,7 @@ class LinkedList:
             return traversal
 
     def add_skip_connections(self):
+        """This function populates n_skips and skip_length"""
         # print("value of LinkedList length is",self.length)
         n_skips = math.floor(math.sqrt(self.length))
         if n_skips * n_skips == self.length:
@@ -80,9 +81,13 @@ class LinkedList:
             This function does not return anything.
             To be implemented."""
 
-    def insert_at_end(self, value):
+    def insert_at_end(self, value, tf_idf = 0):
+        """ Write logic to add new elements to the linked list.
+            Insert the element at an appropriate position, such that elements to the left are lower than the inserted
+            element, and elements to the right are greater than the inserted element.
+            To be implemented. """
         # print("insert value ",value)
-        new_node = Node(value=value, freq=1)
+        new_node = Node(value=value, freq=1, tf_idf=tf_idf)
         n = self.start_node
         self.length += 1
 
@@ -111,10 +116,7 @@ class LinkedList:
             m.next = new_node
             new_node.next = n
             return
-        """ Write logic to add new elements to the linked list.
-            Insert the element at an appropriate position, such that elements to the left are lower than the inserted
-            element, and elements to the right are greater than the inserted element.
-            To be implemented. """
+
 
     def find_an_element(self, value):
         a = self.start_node
@@ -129,4 +131,5 @@ class LinkedList:
         traverse_with_tfidf = []
         while a is not None:
             traverse_with_tfidf.append([a.value,a.tf_idf])
+            a = a.next
         return traverse_with_tfidf

@@ -31,14 +31,30 @@ class ProjectRunner:
     def sort_type(self, li):
         return li[1]
 
-    def _merge(self):
+    def _merge(self, p1, p2, op_type = 'no_skip', compare = 0):
         """ Implement the merge algorithm to merge 2 postings list at a time.
             Use appropriate parameters & return types.
             While merging 2 postings list, preserve the maximum tf-idf value of a document.
             To be implemented."""
-        raise NotImplementedError
+        """p1, p2: linkedlist; op_type: skip or no_skip operation; compare: count of comparisons
+        """
+        merge_ll = LinkedList()
+        for _ in range(p1.length):
+            t1 = p1.Node.value
+            t2 = p2.Node.value
+            if t1 == t2:
+                insert_node = p1
+                if p1.Node.tf_idf < p2.Node.tf_idf:
+                    insert_node = p2
+                merge_ll.insert_at_end(value=insert_node.Node.value, tf_idf=insert_node.Node.tf_idf)
 
-    def _daat_and(self, term_arr, type):
+            if t1 < t2:
+                p1 = p1.Node.next
+            if t2 < t1:
+                p2 = p2.Node.next
+
+
+    def _daat_and(self, term_arr, op_type):
         """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
             Use appropriate parameters & return types.
             To be implemented."""
@@ -47,16 +63,27 @@ class ProjectRunner:
         return_list = []
         return_list_sorted = []
         comparison = 0
+        if len(term_arr) <= 1:
+            return_list = self._get_postings(term_arr[0])
+            return return_list, comparison, return_list, comparison
+
         for term in term_arr:
             if self.indexer.inverted_index.get(term):
                 posting_dict[term] = self.indexer.inverted_index[term]
                 ll_len_list.append([term, posting_dict[term].length])
         # print("before sorting",ll_len_list)
         ll_len_list.sort(key=self.sort_type)
+        search_ll = [self.indexer.inverted_index[ll_len_list[0][0]]]
+        search_ll.append(comparison)
         for i in range(len(ll_len_list)-1):
-            p1 = self.indexer.inverted_index[ll_len_list[i][1]]
-            p2 = self.indexer.inverted_index[ll_len_list[i+1][1]]
+            p1 = search_ll[0]
+            p2 = self.indexer.inverted_index[ll_len_list[i+1][0]]
+            search_ll[0], search_ll[1] = self._merge(p1, p2, op_type, compare=search_ll[1])
         # print("after sorting",ll_len_list)
+        return_list = search_ll[0].traverse_list()
+        comparison = search_ll[1]
+        return_list_sorted = sorted((search_ll[0].traverse_with_tf_idf()), key=self.sort_type)
+        return_list_sorted = [x[0] for x in return_list_sorted]
         return return_list, comparison, return_list_sorted, comparison
 
 

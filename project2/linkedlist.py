@@ -133,3 +133,16 @@ class LinkedList:
             traverse_with_tfidf.append([a.value,a.tf_idf])
             a = a.next
         return traverse_with_tfidf
+
+    def traverse_skips_tfidf(self):
+        """ Write logic to traverse the linked list using skip pointers.
+                To be implemented."""
+        traverse_skip_with_tfidf = []
+        if self.start_node is None:
+            return traverse_skip_with_tfidf
+        else:
+            a = self.start_node
+            while a is not None:
+                traverse_skip_with_tfidf.append([a.value,a.tf_idf])
+                a = a.skip
+            return traverse_skip_with_tfidf

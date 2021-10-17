@@ -38,12 +38,15 @@ class ProjectRunner:
             To be implemented."""
         """p1, p2: linkedlist; op_type: skip or no_skip operation; compare: count of comparisons
         """
+        op_type = 'no_skip'
+        if op_type == 'skip':
+            p1.add_skip_connections()
+            p2.add_skip_connections()
         merge_ll = LinkedList()
+        merge_ll_tfidf = LinkedList()
         t1 = p1.start_node
         t2 = p2.start_node
-        for _ in range(p1.length):
-            # t1 = p1.Node.value
-            # t2 = p2.Node.value
+        while t1 is not None and t2 is not None:
             v1 = t1.value
             v2 = t2.value
             compare += 1
@@ -52,13 +55,27 @@ class ProjectRunner:
                 if t1.tf_idf < t2.tf_idf:
                     insert_node = t2
                 merge_ll.insert_at_end(value=insert_node.value, tf_idf=insert_node.tf_idf)
-                t1 = t1.next
-                t2 = t2.next
+                merge_ll_tfidf.insert_at_end(value=insert_node.tf_idf, tf_idf=insert_node.value)
+                if op_type == 'skip':
+                    t1 = t1.skip
+                    t2 = t2.skip
+                else:
+                    t1 = t1.next
+                    t2 = t2.next
             if v1 < v2:
-                t1 = t1.next
-            if t2 < t1:
-                t2 = t2.next
-        return merge_ll, compare
+                if op_type == 'skip':
+                    t1 = t1.skip
+                else:
+                    t1 = t1.next
+            if v2 < v1:
+                if op_type == 'skip':
+                    t2 = t2.skip
+                else:
+                    t2 = t2.next
+        if op_type == 'skip':
+            merge_ll.add_skip_connections()
+            merge_ll_tfidf.add_skip_connections()
+        return merge_ll, compare, merge_ll_tfidf
 
 
     def _daat_and(self, term_arr, op_type):
@@ -82,15 +99,24 @@ class ProjectRunner:
         ll_len_list.sort(key=self.sort_type)
         search_ll = [self.indexer.inverted_index[ll_len_list[0][0]]]
         search_ll.append(comparison)
+        search_ll.append([])
         for i in range(len(ll_len_list)-1):
             p1 = search_ll[0]
             p2 = self.indexer.inverted_index[ll_len_list[i+1][0]]
-            search_ll[0], search_ll[1] = self._merge(p1, p2, op_type, compare=search_ll[1])
+            search_ll[0], search_ll[1], search_ll[2] = self._merge(p1, p2, op_type, compare=search_ll[1])
         # print("after sorting",ll_len_list)
+        # if op_type == 'no_skip':
         return_list = search_ll[0].traverse_list()
         comparison = search_ll[1]
-        return_list_sorted = sorted((search_ll[0].traverse_with_tf_idf()), key=self.sort_type)
-        return_list_sorted = [x[0] for x in return_list_sorted]
+        return_list_sorted = [x[1] for x in search_ll[2].traverse_with_tf_idf()]
+        return_list_sorted.reverse()
+        # else:
+        #     return_list = search_ll[0].traverse_skips()
+        #     comparison = search_ll[1]
+        #     return_list_sorted = [x[1] for x in search_ll[2].traverse_skips_tfidf()]
+        #     return_list_sorted.reverse()
+        # return_list_sorted = sorted((search_ll[0].traverse_with_tf_idf()), key=self.sort_type, reverse=True)
+        # return_list_sorted = [x[0] for x in return_list_sorted]
         return return_list, comparison, return_list_sorted, comparison
 
 
@@ -130,10 +156,11 @@ class ProjectRunner:
         #     for i in self.indexer.get_index().keys():
         #         text = i + str(self.indexer.get_index()[i].traverse_list())
         #         fp.write(text)
-        # query_list = ['coronavirus the novel coronavirus',' pandemic from an epidemic to a pandemic',
-        #               'is hydroxychloroquine effective?']
-        # random_command = "self.indexer.get_index()['random'].traverse_list()"
-        # self.run_queries(query_list, random_command)
+        query_list = ['coronavirus the novel coronavirus',' pandemic from an epidemic to a pandemic',
+                      'is hydroxychloroquine effective?']
+        random_command = "self.indexer.get_index()['random'].traverse_list()"
+        self.run_queries(query_list, random_command)
+        exit(10)
 
     def sanity_checker(self, command):
         """ DO NOT MODIFY THIS. THIS IS USED BY THE GRADER. """
@@ -217,6 +244,8 @@ class ProjectRunner:
             output_dict['daatAndSkipTfIdf'][query.strip()]['num_docs'] = and_results_cnt_skip_sorted
             output_dict['daatAndSkipTfIdf'][query.strip()]['num_comparisons'] = and_comparisons_skip_sorted
 
+        with open('data/temp_output.json', 'w') as fp:
+            json.dump(output_dict, fp)
         return output_dict
 
 

@@ -3,6 +3,7 @@ import re
 import time
 from collections import OrderedDict
 from nltk.corpus import stopwords
+import  pickle
 
 def rough():
     ll = LinkedList()
@@ -81,7 +82,17 @@ def key(term):
     return term[1]
 
 def main():
-    li = [['a',3],['b',1],['c',2]]
+    dict_sub = {}
+    dict_sub["ip"] = "13.58.91.67"
+    dict_sub["port"] = "9999"
+    dict_sub["name"] = "execute_query"
+
+    with open('project2_index_details.pickle', 'wb') as f:
+        pickle.dump(dict_sub, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    with open('project2_index_details.pickle', 'rb') as f:
+        b = pickle.load(f)
+    print(dict_sub == b)
 
     # print(ll_len.sort())
     # s1 = set(stopwords.words('english'))
@@ -101,7 +112,7 @@ def garbage():
     h1.sort()
     duplicate = False
     if not duplicate:
-    print("inside if")
+        print("inside if")
 
 
 if __name__ == '__main__':

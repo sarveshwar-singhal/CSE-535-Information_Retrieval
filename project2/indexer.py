@@ -70,6 +70,7 @@ class Indexer:
             element = val.start_node
             while element is not None:
                 element.tf_idf = element.tf * val.idf
+                element = element.next
             # val.idf = doc_count/val.length
             # print(self.inverted_index[key].idf)
         """ Calculate tf-idf score for each document in the postings lists of the index.

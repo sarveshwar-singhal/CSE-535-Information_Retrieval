@@ -34,6 +34,14 @@ class Human:
         self.name= n
         self.occupation = o
 
+    def sort_func(self, li):
+        return li[1]
+
+    def sort(self):
+        ll_len = [['a',10],['b',5],['c',1]]
+        ll_len.sort(key=self.sort_func)
+        print(ll_len)
+
     def do_work(self):
         if self.occupation == "tennis player":
             print("playing tennis..")
@@ -73,15 +81,27 @@ def key(term):
     return term[1]
 
 def main():
-    ll_len = [['a',10],['b',5],['c',1]]
-    ll_len.sort(key=key)
-    print(ll_len)
+    li = [['a',3],['b',1],['c',2]]
+
     # print(ll_len.sort())
     # s1 = set(stopwords.words('english'))
     # print('what' in s1)
     # od1 = OrderedDict()
     # od1['a'] = "alpha"
     # print(od1.__str__())
+
+
+def temp_sort():
+    ll_len = [['a',10],['b',5],['c',1]]
+    ll_len.sort(key=key)
+    print(ll_len)
+
+def garbage():
+    h1 = Human()
+    h1.sort()
+    duplicate = False
+    if not duplicate:
+    print("inside if")
 
 
 if __name__ == '__main__':

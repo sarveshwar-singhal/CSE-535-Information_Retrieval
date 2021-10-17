@@ -4,6 +4,7 @@ Institute: University at Buffalo
 '''
 
 import collections
+from collections import OrderedDict
 from nltk.stem import PorterStemmer
 import re
 from nltk.corpus import stopwords
@@ -22,7 +23,7 @@ class Preprocessor:
         arr = doc.split("\t")
         return int(arr[0]), arr[1]
 
-    def tokenizer(self, text):
+    def tokenizer(self, text, duplicate = True):
         """ Implement logic to pre-process & tokenize document text.
             Write the code in such a way that it can be re-used for processing the user's query.
             To be implemented."""
@@ -62,4 +63,10 @@ class Preprocessor:
         # print(text)
         # print(stem_text==out)
         # print(stem_text,end="") #remove
+        # for removing the duplicate term in the user query
+        if not duplicate:
+            od1 = OrderedDict({})
+            for token in stem_text:
+                od1[token] = 0
+            stem_text = od1.keys()
         return stem_text

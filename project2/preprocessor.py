@@ -62,7 +62,6 @@ class Preprocessor:
             stem_text.append(ps.stem(pre_stem_text[i]))
         # print(text)
         # print(stem_text==out)
-        # print(stem_text,end="") #remove
         # for removing the duplicate term in the user query
         if not duplicate:
             od1 = OrderedDict({})

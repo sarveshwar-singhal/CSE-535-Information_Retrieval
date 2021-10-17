@@ -39,19 +39,26 @@ class ProjectRunner:
         """p1, p2: linkedlist; op_type: skip or no_skip operation; compare: count of comparisons
         """
         merge_ll = LinkedList()
+        t1 = p1.start_node
+        t2 = p2.start_node
         for _ in range(p1.length):
-            t1 = p1.Node.value
-            t2 = p2.Node.value
-            if t1 == t2:
-                insert_node = p1
-                if p1.Node.tf_idf < p2.Node.tf_idf:
-                    insert_node = p2
-                merge_ll.insert_at_end(value=insert_node.Node.value, tf_idf=insert_node.Node.tf_idf)
-
-            if t1 < t2:
-                p1 = p1.Node.next
+            # t1 = p1.Node.value
+            # t2 = p2.Node.value
+            v1 = t1.value
+            v2 = t2.value
+            compare += 1
+            if v1 == v2:
+                insert_node = t1
+                if t1.tf_idf < t2.tf_idf:
+                    insert_node = t2
+                merge_ll.insert_at_end(value=insert_node.value, tf_idf=insert_node.tf_idf)
+                t1 = t1.next
+                t2 = t2.next
+            if v1 < v2:
+                t1 = t1.next
             if t2 < t1:
-                p2 = p2.Node.next
+                t2 = t2.next
+        return merge_ll, compare
 
 
     def _daat_and(self, term_arr, op_type):
@@ -127,7 +134,6 @@ class ProjectRunner:
         #               'is hydroxychloroquine effective?']
         # random_command = "self.indexer.get_index()['random'].traverse_list()"
         # self.run_queries(query_list, random_command)
-        # exit(10)    #remove
 
     def sanity_checker(self, command):
         """ DO NOT MODIFY THIS. THIS IS USED BY THE GRADER. """

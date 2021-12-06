@@ -29,7 +29,7 @@ def main():
     # print(li)
     print(guess_language("एक एक एक एक")=='UNKNOWN')
     # print(guess_language("después"))
-    # print(guess_language("this"))
+    print(guess_language("इस वाक्य को हिंदी में परिवर्तित करें"))
 
 
 if __name__ == '__main__':

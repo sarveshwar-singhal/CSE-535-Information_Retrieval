@@ -6,7 +6,7 @@ app = Flask(__name__)
 def index():
     # return "Hello World"
     name = request.args.get("name", "world")
-    return render_template("index.html", name=name)
+    return render_template("try1_index.html", name=name)
 
 @app.route("/register", methods=["POST"])
 def register():

@@ -6,4 +6,5 @@ Project1: This aim of this project was to collect and form dataset for the futur
 
 Project2: The aim of this project is to index the documents, before indexing we need to preprocess the document, various steps included were: stemming, tokenization.
 
-More upates soon....
+
+All the projects are completed, code and detailed documentation will be updated soon...

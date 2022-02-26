@@ -8,3 +8,5 @@ Project2: The aim of this project is to index the documents, before indexing we 
 
 
 All the projects are completed, code and detailed documentation will be updated soon...
+
+P.S. If you want to use the source code, please provide proper reference.
